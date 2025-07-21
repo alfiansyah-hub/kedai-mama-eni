@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu | Kedai Mama Eni</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <h1>Kedai Mama Eni</h1>
+    <nav>
+      <a href="index.html">Beranda</a>
+      <a href="menu.html" class="active">Menu</a>
+      <a href="tentang.html">Tentang</a>
+      <a href="galeri.html">Galeri</a>
+      <a href="kontak.html">Kontak</a>
+    </nav>
+  </header>
+
+  <main class="container menu-page">
+    <h2>Daftar Menu</h2>
+
+    <!-- Input Pencarian -->
+    <input type="text" id="searchInput" placeholder="Cari menu...">
+
+    <!-- Filter Kategori -->
+    <div class="filter-buttons">
+      <button onclick="filterMenu('all')">Semua</button>
+      <button onclick="filterMenu('minuman')">Minuman</button>
+      <button onclick="filterMenu('makanan')">Makanan</button>
+    </div>
+
+    <!-- Tempat Tampil Menu -->
+    <div id="menuContainer" class="menu-list"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Kedai Mama Eni</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

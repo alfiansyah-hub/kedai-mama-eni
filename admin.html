@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin | Kedai Mama Eni</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    form {
+      max-width: 400px;
+      margin: 20px auto;
+      background: #fff8f0;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    form input, form select, form button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    #menuList {
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 10px;
+      background: #fefefe;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .menu-item {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-left: 5px solid maroon;
+      background: #fafafa;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Admin - Kedai Mama Eni</h1>
+    <nav>
+      <a href="index.html">Beranda</a>
+      <a href="menu.html">Menu</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <form id="menuForm">
+      <h2>Tambah Menu Baru</h2>
+      <input type="text" id="nama" placeholder="Nama menu" required />
+      <input type="text" id="harga" placeholder="Harga (contoh: Rp5.000)" required />
+      <select id="kategori" required>
+        <option value="">Pilih kategori</option>
+        <option value="makanan">Makanan</option>
+        <option value="minuman">Minuman</option>
+      </select>
+      <button type="submit">Tambah Menu</button>
+    </form>
+
+    <div id="menuList">
+      <h3>Daftar Menu</h3>
+      <!-- Isi menu tampil di sini -->
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Kedai Mama Eni</p>
+  </footer>
+
+  <script>
+  const form = document.getElementById("menuForm");
+  const menuList = document.getElementById("menuList");
+
+  let daftarMenu = [];
+
+  // Cek apakah ada data di localStorage
+  if (localStorage.getItem("menuData")) {
+    daftarMenu = JSON.parse(localStorage.getItem("menuData"));
+    tampilkanMenu();
+  }
+
+  // Tambah menu
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const nama = document.getElementById("nama").value.trim();
+    const harga = document.getElementById("harga").value.trim();
+    const kategori = document.getElementById("kategori").value;
+
+    if (nama && harga && kategori) {
+      const item = { nama, harga, kategori };
+      daftarMenu.push(item);
+      localStorage.setItem("menuData", JSON.stringify(daftarMenu));
+      tampilkanMenu();
+      form.reset();
+    }
+  });
+
+  // Tampilkan menu
+  function tampilkanMenu() {
+    menuList.innerHTML = `<h3>Daftar Menu</h3>`;
+    daftarMenu.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.classList.add("menu-item", item.kategori);
+      div.innerHTML = `
+        🍽 <strong>${item.nama}</strong> - ${item.harga} <em>(${item.kategori})</em>
+        <button onclick="hapusMenu(${index})" style="float:right;background:#d9534f;color:white;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;">❌</button>
+      `;
+      menuList.appendChild(div);
+    });
+  }
+
+  // Hapus menu berdasarkan index
+  function hapusMenu(index) {
+    if (confirm("Yakin ingin menghapus menu ini?")) {
+      daftarMenu.splice(index, 1); // hapus data dari array
+      localStorage.setItem("menuData", JSON.stringify(daftarMenu)); // update localStorage
+      tampilkanMenu(); // tampilkan ulang
+    }
+  }
+</script>
+
+</body>
+</html>
